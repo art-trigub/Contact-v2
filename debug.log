@@ -16,3 +16,4 @@
 [0131/212413.934:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0131/212413.934:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0201/013841.498:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0205/165533.537:ERROR:crash_report_database_win.cc(428)] unexpected header

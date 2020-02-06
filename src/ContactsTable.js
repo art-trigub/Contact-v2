@@ -16,6 +16,7 @@ export default class Table extends Component {
                 {this.props.contacts.map((tableItem) => (
                    <TableContent 
                     deleteItemFromList={this.props.deleteItemFromList} 
+                    editSelectedContact={this.props.editSelectedContact}
                     key={tableItem.id} 
                     item={tableItem} />
                 ))}

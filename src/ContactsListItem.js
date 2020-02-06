@@ -4,9 +4,14 @@ export default class TableContent extends Component {
     deleteThisItem = (e) => {
         this.props.deleteItemFromList(this.props.item.id)
     }
+
+    editThisItem = () => {
+        this.props.editSelectedContact(this.props.item)
+    }
+
     render() {
         return (
-            <tr>
+            <tr onClick={this.editThisItem}>
                 <td>
                     {this.props.item.name}
                 </td>
@@ -15,8 +20,9 @@ export default class TableContent extends Component {
                 </td>
                 <td>
                     {this.props.item.age}
+                    <button onClick={this.deleteThisItem}>delete</button>
                 </td>
-                <button onClick={this.deleteThisItem}>delete</button>
+                
             </tr>
         )
     }

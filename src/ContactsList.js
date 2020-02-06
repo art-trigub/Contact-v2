@@ -4,6 +4,7 @@ import ContactsEdit from './ContactsEdit';
 
 export default class ContactList extends Component {
   state = {
+    selectedContact: this.getEmptyContact(),
     contacts: [
       {
         "id": 1,
@@ -68,14 +69,28 @@ export default class ContactList extends Component {
     ]
   };
 
-  addNewContact = (changes) => {
+  saveContact = (contact) => {
+    if(contact.id) {
+      this.updateContact(contact)
+    } else {
+      this.createContact(contact)
+    }
+  }
+
+  updateContact = (contact) => {
     this.setState({
-      contacts: [
-        ...this.state.contacts,
-        changes
-      ]
+      contacts: this.state.contacts.map(item => item.id === contact.id ? contact : item)
     })
   }
+
+  createContact = (contact) => {
+    contact.id = Date.now();
+    this.setState({
+      contacts: [...this.state.contacts, contact],
+      selectedContact: contact
+    })
+  }
+
   deleteItemFromList = (id) => {
     const newList = this.state.contacts.filter((item) => {
       return item.id !== id;
@@ -85,13 +100,41 @@ export default class ContactList extends Component {
         newList
     })
   }
+
+  getEmptyContact() {
+    return {
+      "age": "",
+      "name": "",
+      "surname": ""
+    }
+  }
+  
+  editSelectedContact = (contact) => {
+    this.setState({
+      selectedContact: contact
+    })
+  }
+  
+  addNewContactBtn = (e) => {
+    this.setState({
+      selectedContact: this.getEmptyContact()
+    })
+  }
+
   render() {
     return (
       <div className="contacts-main">
         <div className="contacts-list">
-          <ContactsTable deleteItemFromList={this.deleteItemFromList} contacts={this.state.contacts} />
+          <ContactsTable 
+          deleteItemFromList={this.deleteItemFromList}
+          editSelectedContact={this.editSelectedContact} 
+          contacts={this.state.contacts} />
+          <button onClick={this.addNewContactBtn} className="btn-add-New-Contact">Add new</button>
         </div>
-        <ContactsEdit addNewContact={this.addNewContact} />        
+        <ContactsEdit 
+        key={this.state.selectedContact.id}
+        contact={this.state.selectedContact} 
+        saveContact={this.saveContact} />        
       </div>
     )
   }
